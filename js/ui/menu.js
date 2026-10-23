@@ -1,7 +1,7 @@
 /* ============ menu.js — menú principal, colección y mejoras ============ */
 G.MenuUI = (() => {
   const $ = G.UI.$;
-  const GEN_NAMES = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Teselia', 'Kalos', 'Alola', 'Galar', 'Paldea', 'Sentinel Strength', 'Sentinel Agility', 'Sentinel Intelligence', 'Scourge Strength', 'Scourge Agility', 'Scourge Intelligence'];
+  const GEN_NAMES = ['Sentinel Strength', 'Sentinel Agility', 'Sentinel Intelligence', 'Scourge Strength', 'Scourge Agility', 'Scourge Intelligence'];
   let dexGen = 1, dexSel = null;
   // Filtros de la colección (se combinan): tengo / me faltan, rarezas (varias),
   // shiny, favoritos, tipo y búsqueda; y el orden. Duran mientras no recargas.

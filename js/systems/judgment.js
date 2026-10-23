@@ -46,7 +46,7 @@ G.Judgment = (() => {
   const SPD_SOFT = 130, SPD_OVER = 0.25;
   const capSpd = s => (s <= SPD_SOFT ? s : SPD_SOFT + (s - SPD_SOFT) * SPD_OVER);
   const touchPct = () => Math.min(1, TOUCH + Math.max(0, arenaT - 420) / 180 * (1 - TOUCH));
-  const ARCEUS = 493, SCALE = 1.5;
+  const ARCEUS = 3003, SCALE = 1.5;   // MOD: bos Judgment = Bradwarden (hero terkuat); dulu Arceus #493
   // Línea de tiempo de la animación (segundos).
   const T_TITLE = 1.3, T_FLASH = 4.7, T_PORT = 5.1, T_DESC = 5.7, T_LAND = 7.9, T_BACK = 9.1, T_END = 10.1;
   const GOLD = '#ffd25e';

@@ -72,7 +72,7 @@ G.Enemies = (() => {
     if (BOMB.has(p.dex)) return 'bomber';
     if (SUMMON[p.dex] && G.SPRITE_META[SUMMON[p.dex]]) return 'summoner';
     // Enjambres: algunos Bicho llaman a más de los suyos (desde el principio).
-    if (has('bug') && h >= 0.6 && h < 0.78) return 'summoner';
+    if (SUMMON[p.dex] && has('bug') && h >= 0.6 && h < 0.78) return 'summoner';
     if (has('electric', 'psychic', 'dragon', 'ice') && h < 0.18) return 'beamer';
     if (has('fire', 'ground', 'poison') && h < 0.18) return 'zoner';
     if (has('water', 'grass', 'bug', 'fairy') && h >= 0.18 && h < 0.32) return 'fan';
@@ -113,7 +113,12 @@ G.Enemies = (() => {
 
   /** Todos los candidatos de un tramo (sin legendarios ni míticos). */
   function candidates(tier) {
-    return G.DEX.filter(p => p.rarity < 5 && p.bst >= tier.bst[0] && p.bst <= tier.bst[1] && G.SPRITE_META[p.dex]);
+    // MOD Dota: dengan 112 hero, dua tier teratas kosong bila rarity<5 & !leg
+    // ditegakkan ketat. Tier atas (bst>=495) boleh rarity 5; tier teratas
+    // (bst>=530) boleh juga hero legendaris sebagai musuh liar endgame.
+    const top = tier.bst[0] >= 495, veryTop = tier.bst[0] >= 530;
+    return G.DEX.filter(p => G.SPRITE_META[p.dex] && p.bst >= tier.bst[0] && p.bst <= tier.bst[1]
+      && (p.rarity < 5 || top) && (!p.leg || veryTop));
   }
 
   // ---------------- elenco de la run ----------------
@@ -157,6 +162,8 @@ G.Enemies = (() => {
       const ok = p => !p.leg && G.SPRITE_META[p.dex] && !used.has(p.dex);
       let pool = G.DEX.filter(p => ok(p) && p.bst >= slot.bst[0] && p.bst <= slot.bst[1]);
       if (!pool.length) pool = G.DEX.filter(p => ok(p) && p.bst >= 580);
+      if (!pool.length) pool = G.DEX.filter(p => ok(p) && p.bst >= 500);
+      if (!pool.length) pool = G.DEX.filter(ok).sort((a, b) => b.bst - a.bst).slice(0, 8);
       const p = G.U.pick(pool);
       used.add(p.dex);
       return {
